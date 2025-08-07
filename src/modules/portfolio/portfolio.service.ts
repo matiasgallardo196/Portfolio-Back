@@ -1,6 +1,8 @@
-import { portfolioData } from "../../data";
-import { PortfolioData, SkillCategory, Project } from "../../data/types";
+import { Injectable, NotFoundException } from "@nestjs/common";
+import { portfolioData } from "../../../data";
+import { PortfolioData, SkillCategory, Project } from "../../../data/types";
 
+@Injectable()
 export class PortfolioService {
   /**
    * Obtiene todos los datos del portfolio
@@ -27,12 +29,13 @@ export class PortfolioService {
    * Obtiene habilidades de una categoría específica
    */
   async getSkillsByCategory(category: string) {
-    const skills = portfolioData.skills[category as keyof typeof portfolioData.skills];
-    
+    const skills =
+      portfolioData.skills[category as keyof typeof portfolioData.skills];
+
     if (!skills) {
-      throw new Error(`Categoría '${category}' no encontrada`);
+      throw new NotFoundException();
     }
-    
+
     return skills;
   }
 
@@ -55,11 +58,11 @@ export class PortfolioService {
    */
   async getProjectById(id: string): Promise<Project> {
     const project = portfolioData.projects.find((p) => p.id === id);
-    
+
     if (!project) {
-      throw new Error(`Proyecto con ID '${id}' no encontrado`);
+      throw new NotFoundException();
     }
-    
+
     return project;
   }
 
@@ -121,6 +124,3 @@ export class PortfolioService {
     };
   }
 }
-
-// Instancia singleton del servicio
-export const portfolioService = new PortfolioService(); 
