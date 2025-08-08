@@ -2,6 +2,7 @@ import { NestFactory } from "@nestjs/core";
 import { AppModule } from "../app.module";
 import { DatabaseService } from "../modules/database/database.service";
 import { SkillCategory } from "../entities";
+import { contactData as defaultContactData } from "../../data/contact";
 
 async function completeTestUsers() {
   const app = await NestFactory.createApplicationContext(AppModule);
@@ -234,8 +235,39 @@ async function completeTestUsers() {
       }
       console.log(`   ✅ ${languages.length} idiomas creados`);
 
-      // Crear datos de contacto
+      // Crear/actualizar datos de contacto con opportunities y locationInfo
       console.log("\n📞 Creando datos de contacto...");
+      const existingContact = await databaseService.getContactByUserId(userId);
+      const allSkillsForUser = await databaseService.getSkillsByUserId(userId);
+
+      // Asegurar skills para opportunities
+      const ensuredOpportunities = [] as any[];
+      for (const opp of defaultContactData.opportunities) {
+        let skill = allSkillsForUser.find((s) => s.name === opp.name);
+        if (!skill) {
+          skill = await databaseService.createSkill({
+            name: opp.name,
+            category: SkillCategory.PRACTICES,
+            userId,
+          });
+        }
+        ensuredOpportunities.push(skill);
+      }
+
+      // Asegurar skills para locationInfo
+      const ensuredLocationInfo = [] as any[];
+      for (const loc of defaultContactData.locationInfo) {
+        let skill = allSkillsForUser.find((s) => s.name === loc.name);
+        if (!skill) {
+          skill = await databaseService.createSkill({
+            name: loc.name,
+            category: SkillCategory.PRACTICES,
+            userId,
+          });
+        }
+        ensuredLocationInfo.push(skill);
+      }
+
       const contactData = {
         email: user.email,
         linkedin: `https://linkedin.com/in/${user.username}`,
@@ -251,10 +283,24 @@ async function completeTestUsers() {
         currentStatusTitle: "Estado Actual",
         locationTitle: "Ubicación",
         userId: userId,
-      };
+        opportunities: ensuredOpportunities,
+        locationInfo: ensuredLocationInfo,
+      } as any;
 
-      await databaseService.createContact(contactData);
-      console.log("   ✅ Datos de contacto creados");
+      if (!existingContact) {
+        await databaseService.createContact(contactData);
+        console.log(
+          "   ✅ Datos de contacto creados (con opportunities y locationInfo)"
+        );
+      } else {
+        await databaseService.updateContact(
+          existingContact.id,
+          contactData as any
+        );
+        console.log(
+          "   ✅ Datos de contacto actualizados (con opportunities y locationInfo)"
+        );
+      }
 
       console.log("\n" + "=".repeat(50));
     }

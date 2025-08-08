@@ -36,6 +36,11 @@ export class DatabaseService {
     );
   }
 
+  // User helpers
+  async getUserByEmail(email: string): Promise<User | null> {
+    return this.userRepository.findOne({ where: { email } });
+  }
+
   // About methods
   async getAbout(): Promise<About | null> {
     return this.aboutRepository.findOne({ where: {} });
@@ -175,7 +180,23 @@ export class DatabaseService {
     id: string,
     contactData: Partial<Contact>
   ): Promise<Contact | null> {
-    await this.contactRepository.update(id, contactData);
+    const existing = await this.contactRepository.findOne({
+      where: { id },
+      relations: ["opportunities", "locationInfo"],
+    });
+    if (!existing) return null;
+
+    const { opportunities, locationInfo, ...scalarFields } = contactData;
+    Object.assign(existing, scalarFields);
+
+    if (opportunities !== undefined) {
+      existing.opportunities = opportunities as any;
+    }
+    if (locationInfo !== undefined) {
+      existing.locationInfo = locationInfo as any;
+    }
+
+    await this.contactRepository.save(existing);
     return this.contactRepository.findOne({
       where: { id },
       relations: ["opportunities", "locationInfo"],
