@@ -18,12 +18,21 @@ Toda la documentación del proyecto está centralizada en la carpeta [`docs/`](.
 
 - [`docs/NESTJS_MIGRATION_README.md`](./docs/NESTJS_MIGRATION_README.md) - Migración de Express a NestJS
 - [`docs/REFACTORING_SUMMARY.md`](./docs/REFACTORING_SUMMARY.md) - Refactorización de excepciones
+- [`docs/TYPEORM_IMPLEMENTATION.md`](./docs/TYPEORM_IMPLEMENTATION.md) - Implementación de TypeORM con entidades
+- [`docs/ENV_LOADER_IMPLEMENTATION.md`](./docs/ENV_LOADER_IMPLEMENTATION.md) - Sistema centralizado de variables de entorno
 
 ## 🚀 Inicio Rápido
 
 ```bash
 # Instalar dependencias
 npm install
+
+# Configurar variables de entorno
+cp env.example .env.development
+# Editar .env.development con tus credenciales de PostgreSQL
+
+# Poblar la base de datos con datos iniciales
+npm run seed
 
 # Ejecutar en desarrollo
 npm run start:dev
@@ -47,6 +56,7 @@ npm run build
 
 - **Framework**: NestJS
 - **Lenguaje**: TypeScript
+- **Base de Datos**: PostgreSQL con TypeORM
 - **Puerto**: 3001
 - **Arquitectura**: Modular con inyección de dependencias
 

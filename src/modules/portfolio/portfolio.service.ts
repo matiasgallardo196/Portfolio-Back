@@ -1,11 +1,21 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { portfolioData } from "../../../data";
 import { PortfolioData, SkillCategory, Project } from "../../../data/types";
+import { DatabaseService } from "../database/database.service";
 
 @Injectable()
 export class PortfolioService {
+  constructor(private readonly databaseService: DatabaseService) {}
+
   /**
-   * Obtiene todos los datos del portfolio
+   * Obtiene todos los datos del portfolio de un usuario específico
+   */
+  async getPortfolioByUserId(userId: string) {
+    return await this.databaseService.getPortfolioByUserId(userId);
+  }
+
+  /**
+   * Obtiene todos los datos del portfolio (endpoint legacy)
    */
   async getAllPortfolioData(): Promise<PortfolioData> {
     return portfolioData;
