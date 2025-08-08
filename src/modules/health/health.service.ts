@@ -17,15 +17,7 @@ export class HealthService {
       timestamp: new Date().toISOString(),
       endpoints: {
         portfolio: "/portfolio",
-        about: "/about",
-        skills: "/skills",
-        projects: "/projects",
-        achievements: "/achievements",
-        languages: "/languages",
-        contact: "/contact",
-        theme: "/theme",
-        search: "/search/projects",
-        stats: "/stats",
+        portfolioByUserId: "/portfolio/:userId",
       },
       stats,
     };

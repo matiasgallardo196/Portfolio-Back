@@ -1,6 +1,6 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { portfolioData } from "../../../data";
-import { PortfolioData, SkillCategory, Project } from "../../../data/types";
+import { SkillCategory, Project } from "../../../data/types";
 import { DatabaseService } from "../database/database.service";
 
 @Injectable()
@@ -14,116 +14,9 @@ export class PortfolioService {
     return await this.databaseService.getPortfolioByUserId(userId);
   }
 
-  /**
-   * Obtiene todos los datos del portfolio (endpoint legacy)
-   */
-  async getAllPortfolioData(): Promise<PortfolioData> {
-    return portfolioData;
-  }
+  // eliminado endpoint legacy getAllPortfolioData
 
-  /**
-   * Obtiene información personal
-   */
-  async getAboutInfo() {
-    return portfolioData.about;
-  }
-
-  /**
-   * Obtiene todas las habilidades organizadas por categorías
-   */
-  async getAllSkills(): Promise<SkillCategory> {
-    return portfolioData.skills;
-  }
-
-  /**
-   * Obtiene habilidades de una categoría específica
-   */
-  async getSkillsByCategory(category: string) {
-    const skills =
-      portfolioData.skills[category as keyof typeof portfolioData.skills];
-
-    if (!skills) {
-      throw new NotFoundException();
-    }
-
-    return skills;
-  }
-
-  /**
-   * Obtiene todas las categorías de habilidades disponibles
-   */
-  async getAvailableSkillCategories(): Promise<string[]> {
-    return Object.keys(portfolioData.skills);
-  }
-
-  /**
-   * Obtiene todos los proyectos
-   */
-  async getAllProjects(): Promise<Project[]> {
-    return portfolioData.projects;
-  }
-
-  /**
-   * Obtiene un proyecto específico por ID
-   */
-  async getProjectById(id: string): Promise<Project> {
-    const project = portfolioData.projects.find((p) => p.id === id);
-
-    if (!project) {
-      throw new NotFoundException();
-    }
-
-    return project;
-  }
-
-  /**
-   * Busca proyectos por tecnología
-   */
-  async searchProjectsByTechnology(technology: string) {
-    const filteredProjects = portfolioData.projects.filter((project) =>
-      project.technologies.some((tech) =>
-        tech.name.toLowerCase().includes(technology.toLowerCase())
-      )
-    );
-
-    return {
-      searchTerm: technology,
-      results: filteredProjects,
-      totalResults: filteredProjects.length,
-    };
-  }
-
-  /**
-   * Obtiene todos los logros
-   */
-  async getAchievements() {
-    return portfolioData.achievements;
-  }
-
-  /**
-   * Obtiene información de idiomas
-   */
-  async getLanguages() {
-    return portfolioData.languages;
-  }
-
-  /**
-   * Obtiene información de contacto
-   */
-  async getContactInfo() {
-    return portfolioData.contact;
-  }
-
-  /**
-   * Obtiene configuración del tema
-   */
-  async getThemeConfig() {
-    return portfolioData.theme;
-  }
-
-  /**
-   * Obtiene estadísticas del portfolio
-   */
+  // Estadísticas del portfolio (consumido por Health; usa datos mock)
   async getPortfolioStats() {
     return {
       totalProjects: portfolioData.projects.length,
