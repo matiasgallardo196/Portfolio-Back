@@ -1,5 +1,6 @@
 import { NestFactory } from "@nestjs/core";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
+import { ValidationPipe } from "@nestjs/common";
 import { AppModule } from "./app.module";
 import { loggerMiddleware } from "./middleware/logger.middleware";
 import { PORT, CORS_ORIGIN } from "./config/env.loader";
@@ -15,6 +16,15 @@ async function bootstrap() {
 
   // Middleware para logging
   app.use(loggerMiddleware);
+
+  // Configurar validación global
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+    })
+  );
 
   // Configurar Swagger
   const config = new DocumentBuilder()
