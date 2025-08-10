@@ -23,7 +23,10 @@
     "complete-users": "ts-node src/scripts/complete-test-users.ts",
     "test-endpoints": "ts-node src/scripts/test-endpoints.ts",
     "test-auth": "ts-node src/scripts/test-auth-endpoints.ts",
-    "test-token-validation": "ts-node src/scripts/test-token-validation.ts"
+    "test-token-validation": "ts-node src/scripts/test-token-validation.ts",
+    "test-update-about": "ts-node src/scripts/test-update-about.ts",
+    "test-exact-body": "node src/scripts/test-exact-body.js",
+    "test-correct-body": "node src/scripts/test-correct-body.js"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",

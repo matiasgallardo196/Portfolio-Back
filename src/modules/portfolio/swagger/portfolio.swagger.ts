@@ -1,6 +1,9 @@
 import { applyDecorators } from "@nestjs/common";
 import { ApiOperation, ApiParam, ApiResponse, ApiTags } from "@nestjs/swagger";
-import { PortfolioResponseDto } from "../../../dto/portfolio.dto";
+import {
+  PortfolioResponseDto,
+  UpdateAboutDto,
+} from "../../../dto/portfolio.dto";
 
 // Etiqueta del módulo
 export function PortfolioTag() {
@@ -41,6 +44,31 @@ export function GetFixedPortfolioDocs() {
       status: 200,
       description: "Portfolio del usuario fijo obtenido exitosamente",
     })
+  );
+}
+
+// PUT /portfolio/:userId/about
+export function UpdateAboutByUserIdDocs() {
+  return applyDecorators(
+    ApiOperation({
+      summary: "Actualizar información about del usuario",
+      description:
+        "Actualiza la información personal (about) de un usuario específico y retorna el portfolio completo actualizado",
+    }),
+    ApiParam({
+      name: "userId",
+      description: "ID único del usuario",
+      example: "808ceb8b-8da6-440c-952d-2d5c23b070e0",
+    }),
+    ApiResponse({
+      status: 200,
+      description: "Información about actualizada exitosamente",
+      type: PortfolioResponseDto,
+    }),
+    ApiResponse({ status: 400, description: "Datos de entrada inválidos" }),
+    ApiResponse({ status: 401, description: "Token de autorización inválido" }),
+    ApiResponse({ status: 404, description: "Usuario no encontrado" }),
+    ApiResponse({ status: 500, description: "Error interno del servidor" })
   );
 }
 

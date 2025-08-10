@@ -232,6 +232,14 @@ export class DatabaseService {
     return this.aboutRepository.findOne({ where: { userId } });
   }
 
+  async updateAboutByUserId(
+    userId: string,
+    aboutData: Partial<About>
+  ): Promise<About | null> {
+    await this.aboutRepository.update({ userId }, aboutData);
+    return this.aboutRepository.findOne({ where: { userId } });
+  }
+
   async getSkillsByUserId(userId: string): Promise<Skill[]> {
     return this.skillRepository.find({ where: { userId } });
   }

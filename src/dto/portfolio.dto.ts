@@ -1,4 +1,11 @@
 import { ApiProperty } from "@nestjs/swagger";
+import {
+  IsString,
+  IsNotEmpty,
+  IsObject,
+  ValidateNested,
+} from "class-validator";
+import { Type } from "class-transformer";
 
 export class AboutDto {
   @ApiProperty({ description: "ID único del registro about" })
@@ -260,4 +267,107 @@ export class PortfolioResponseDto {
 
   @ApiProperty({ type: ContactDto, description: "Información de contacto" })
   contact: ContactDto;
+}
+
+class CtaButtonsDto {
+  @ApiProperty({ description: "Texto del botón de proyectos" })
+  @IsString()
+  @IsNotEmpty()
+  projects: string;
+
+  @ApiProperty({ description: "Texto del botón de contacto" })
+  @IsString()
+  @IsNotEmpty()
+  contact: string;
+}
+
+class StatsItemDto {
+  @ApiProperty({ description: "Título de la estadística" })
+  @IsString()
+  @IsNotEmpty()
+  title: string;
+
+  @ApiProperty({ description: "Subtítulo de la estadística" })
+  @IsString()
+  @IsNotEmpty()
+  subtitle: string;
+}
+
+class StatsDto {
+  @ApiProperty({ description: "Estadísticas de proyectos" })
+  @IsObject()
+  @ValidateNested()
+  @Type(() => StatsItemDto)
+  projects: StatsItemDto;
+
+  @ApiProperty({ description: "Estadísticas de tecnologías" })
+  @IsObject()
+  @ValidateNested()
+  @Type(() => StatsItemDto)
+  technologies: StatsItemDto;
+
+  @ApiProperty({ description: "Estadísticas de idiomas" })
+  @IsObject()
+  @ValidateNested()
+  @Type(() => StatsItemDto)
+  languages: StatsItemDto;
+}
+
+export class UpdateAboutDto {
+  @ApiProperty({ description: "Nombre completo del usuario" })
+  @IsString()
+  @IsNotEmpty()
+  fullName: string;
+
+  @ApiProperty({ description: "Ubicación del usuario" })
+  @IsString()
+  @IsNotEmpty()
+  location: string;
+
+  @ApiProperty({ description: "Biografía del usuario" })
+  @IsString()
+  @IsNotEmpty()
+  biography: string;
+
+  @ApiProperty({ description: "Descripción de la página" })
+  @IsString()
+  @IsNotEmpty()
+  pageDescription: string;
+
+  @ApiProperty({ description: "Meta descripción para SEO" })
+  @IsString()
+  @IsNotEmpty()
+  metaDescription: string;
+
+  @ApiProperty({ description: "Título principal" })
+  @IsString()
+  @IsNotEmpty()
+  heroTitle: string;
+
+  @ApiProperty({ description: "Subtítulo principal" })
+  @IsString()
+  @IsNotEmpty()
+  heroSubtitle: string;
+
+  @ApiProperty({ description: "URL del avatar" })
+  @IsString()
+  @IsNotEmpty()
+  avatarUrl: string;
+
+  @ApiProperty({ description: "Estado de reubicación" })
+  @IsString()
+  @IsNotEmpty()
+  relocationStatus: string;
+
+  @ApiProperty({ description: "Botones de llamada a la acción" })
+  @IsObject()
+  @ValidateNested()
+  @Type(() => CtaButtonsDto)
+  ctaButtons: CtaButtonsDto;
+
+  @ApiProperty({ description: "Estadísticas del portfolio" })
+  @IsObject()
+  @ValidateNested()
+  @Type(() => StatsDto)
+  stats: StatsDto;
 }

@@ -14,6 +14,23 @@ export class PortfolioService {
     return await this.databaseService.getPortfolioByUserId(userId);
   }
 
+  /**
+   * Actualiza la información about de un usuario específico
+   */
+  async updateAboutByUserId(userId: string, aboutData: any) {
+    // Verificar que el usuario existe
+    const user = await this.databaseService.getUserById(userId);
+    if (!user) {
+      throw new Error("Usuario no encontrado");
+    }
+
+    // Actualizar la información about
+    await this.databaseService.updateAboutByUserId(userId, aboutData);
+
+    // Retornar el portfolio completo actualizado
+    return await this.databaseService.getPortfolioByUserId(userId);
+  }
+
   // eliminado endpoint legacy getAllPortfolioData
 
   // Estadísticas del portfolio (consumido por Health; usa datos mock)
