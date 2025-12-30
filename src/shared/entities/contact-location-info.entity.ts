@@ -8,6 +8,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { Contact } from './contact.entity';
+import { Exclude } from 'class-transformer';
 
 @Entity('contact_location_info')
 export class ContactLocationInfo {
@@ -22,6 +23,7 @@ export class ContactLocationInfo {
 
   @ManyToOne(() => Contact, (contact) => contact.locationInfo, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'contactId' })
+  @Exclude()
   contact: Contact;
 
   @CreateDateColumn({ name: 'createdAt' })

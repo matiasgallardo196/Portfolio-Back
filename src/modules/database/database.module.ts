@@ -34,7 +34,7 @@ import {
         ContactOpportunity,
         ContactLocationInfo,
       ],
-      synchronize: false, // Never set to true in production
+      synchronize: IS_DEVELOPMENT, // Auto-sync in development only
       logging: IS_DEVELOPMENT,
     }),
   ],

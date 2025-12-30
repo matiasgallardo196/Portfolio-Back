@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 import { Project } from './project.entity';
 import { Skill } from './skill.entity';
+import { Exclude } from 'class-transformer';
 
 @Entity('project_skills')
 @Unique(['projectId', 'skillId'])
@@ -25,6 +26,7 @@ export class ProjectSkill {
 
   @ManyToOne(() => Project, (project) => project.projectSkills, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'projectId' })
+  @Exclude()
   project: Project;
 
   @ManyToOne(() => Skill, (skill) => skill.projectSkills, { onDelete: 'CASCADE' })

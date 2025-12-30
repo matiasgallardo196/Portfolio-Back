@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 import { User } from './user.entity';
 import { ProjectSkill } from './project-skill.entity';
+import { Exclude } from 'class-transformer';
 
 export enum SkillCategory {
   LANGUAGES = 'languages',
@@ -41,9 +42,11 @@ export class Skill {
 
   @ManyToOne(() => User, (user) => user.skills, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'userId' })
+  @Exclude()
   user: User;
 
   @OneToMany(() => ProjectSkill, (projectSkill) => projectSkill.skill)
+  @Exclude()
   projectSkills: ProjectSkill[];
 
   @CreateDateColumn({ name: 'createdAt' })

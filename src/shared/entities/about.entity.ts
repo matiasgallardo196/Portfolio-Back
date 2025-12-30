@@ -8,6 +8,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { User } from './user.entity';
+import { Exclude } from 'class-transformer';
 
 @Entity('about')
 export class About {
@@ -52,6 +53,7 @@ export class About {
 
   @OneToOne(() => User, (user) => user.about, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'userId' })
+  @Exclude()
   user: User;
 
   @CreateDateColumn({ name: 'createdAt' })

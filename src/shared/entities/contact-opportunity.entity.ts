@@ -8,6 +8,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { Contact } from './contact.entity';
+import { Exclude } from 'class-transformer';
 
 @Entity('contact_opportunities')
 export class ContactOpportunity {
@@ -22,6 +23,7 @@ export class ContactOpportunity {
 
   @ManyToOne(() => Contact, (contact) => contact.opportunities, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'contactId' })
+  @Exclude()
   contact: Contact;
 
   @CreateDateColumn({ name: 'createdAt' })

@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 import { User } from './user.entity';
 import { ProjectSkill } from './project-skill.entity';
+import { Exclude } from 'class-transformer';
 
 @Entity('projects')
 export class Project {
@@ -36,6 +37,7 @@ export class Project {
 
   @ManyToOne(() => User, (user) => user.projects, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'userId' })
+  @Exclude()
   user: User;
 
   @OneToMany(() => ProjectSkill, (projectSkill) => projectSkill.project, { cascade: true })

@@ -11,6 +11,7 @@ import {
 import { User } from './user.entity';
 import { ContactOpportunity } from './contact-opportunity.entity';
 import { ContactLocationInfo } from './contact-location-info.entity';
+import { Exclude } from 'class-transformer';
 
 @Entity('contact')
 export class Contact {
@@ -58,6 +59,7 @@ export class Contact {
 
   @OneToOne(() => User, (user) => user.contact, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'userId' })
+  @Exclude()
   user: User;
 
   @OneToMany(() => ContactOpportunity, (opportunity) => opportunity.contact, { cascade: true })

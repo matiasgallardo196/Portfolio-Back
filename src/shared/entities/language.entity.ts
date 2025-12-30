@@ -8,6 +8,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { User } from './user.entity';
+import { Exclude } from 'class-transformer';
 
 @Entity('languages')
 export class Language {
@@ -25,6 +26,7 @@ export class Language {
 
   @ManyToOne(() => User, (user) => user.languages, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'userId' })
+  @Exclude()
   user: User;
 
   @CreateDateColumn({ name: 'createdAt' })
