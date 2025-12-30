@@ -15,14 +15,8 @@ export class Achievement {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
-  title: string;
-
-  @Column()
-  value: string;
-
-  @Column({ nullable: true })
-  subtitle: string;
+  @Column('text')
+  description: string;
 
   @Column({ name: 'userId' })
   userId: string;

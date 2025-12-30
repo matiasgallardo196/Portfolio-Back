@@ -35,7 +35,8 @@ import {
         ContactLocationInfo,
       ],
       synchronize: IS_DEVELOPMENT, // Auto-sync in development only
-      logging: IS_DEVELOPMENT,
+      logging: !IS_DEVELOPMENT,
+      //dropSchema: true,
     }),
   ],
 })

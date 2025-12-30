@@ -60,7 +60,7 @@ async function seed() {
     // Create User
     const hashedPassword = await bcrypt.hash('portfolio123', 10);
     const user = queryRunner.manager.create(User, {
-      email: 'dreico07@gmail.com',
+      email: 'matiasgallardo196@gmail.com',
       username: 'matiasgallardo',
       password: hashedPassword,
       isActive: true,
@@ -71,83 +71,70 @@ async function seed() {
     // Create About
     const about = queryRunner.manager.create(About, {
       userId: user.id,
-      fullName: 'Matías Gallardo',
-      location: 'Moree, NSW, Australia',
-      biography: `Backend-focused Full Stack Developer based in NSW, Australia. I build API-driven systems and multi-tenant platforms with Node.js, NestJS, TypeScript and PostgreSQL, and I'm experienced deploying real products with Docker, NGINX, HTTPS and CI/CD. I transitioned into tech after a background in hospitality/chef work (including experience in France), and I'm now focused on scalable architectures, integrations (Stripe/Auth0/Firebase) and AI-powered workflows (agents, RAG).`,
-      pageDescription: 'Portfolio of Matías Gallardo - Backend-Focused Full Stack Developer',
-      metaDescription: 'Backend-focused Full Stack Developer specializing in NestJS, PostgreSQL, Docker, and scalable API-driven architectures.',
-      heroTitle: 'Backend-Focused Full Stack Developer',
-      heroSubtitle: 'Building scalable, API-driven platforms with NestJS, PostgreSQL & Docker',
-      avatarUrl: 'https://avatars.githubusercontent.com/u/195301924?v=4',
-      relocationStatus: 'Open to relocation (Australia) + Remote/Hybrid',
-      ctaButtons: [
-        { label: 'View Projects', href: '/projects' },
-        { label: 'Contact Me', href: '/contact' },
-      ],
+      fullName: 'Matias Gallardo',
+      location: 'Sydney, Australia',
+      biography: `I'm a Full Stack Web Developer with a strong Back-End orientation, passionate about building scalable systems and delivering real-world solutions with measurable impact. I graduated from Henry's intensive bootcamp and hold a Technical Analyst degree in Information Systems from UTN FRT.
+
+I specialize in modern technologies and follow best practices in validation, testing, and secure access control through RESTful APIs. My experience includes multi-tenant platforms, Stripe integrations, GitHub Actions, and cloud deployment across various platforms.
+
+I'm passionate about clean architecture, automation, and creating solutions that make a real difference. When I'm not coding, I enjoy contributing to the developer community and staying updated with the latest technologies.`,
+      pageDescription: "Learn more about Matias Gallardo's experience and skills in full stack development",
+      metaDescription: 'Full Stack Web Developer with strong Back-End orientation. Specialized in NestJS, TypeScript, PostgreSQL, and scalable systems. Based in Sydney, Australia.',
+      heroTitle: 'Full Stack Web Developer',
+      heroSubtitle: 'Back-End Oriented',
+      avatarUrl: '/avatar.jpg',
+      relocationStatus: 'Open to relocate',
+      ctaButtons: {
+        projects: 'Checkout My Work',
+        contact: 'Contact Me',
+      },
       stats: {
-        projects: { title: 'Projects', subtitle: 'Completed' },
-        technologies: { title: 'Technologies', subtitle: 'Mastered' },
-        languages: { title: 'Languages', subtitle: 'Fluent' },
+        projects: { title: 'Full-Stack Projects Deployed', subtitle: 'Production-ready applications' },
+        technologies: { title: 'Technologies Mastered', subtitle: 'Modern stack expertise' },
+        languages: { title: 'Languages', subtitle: 'Bilingual communication' },
       },
     });
     await queryRunner.manager.save(about);
     console.log('📝 About created');
 
-    // Create Skills
+    // Create Skills (matching production website)
     const skillsData: { name: string; category: SkillCategory }[] = [
       // Languages
-      { name: 'TypeScript', category: SkillCategory.LANGUAGES },
       { name: 'JavaScript', category: SkillCategory.LANGUAGES },
+      { name: 'TypeScript', category: SkillCategory.LANGUAGES },
       { name: 'SQL', category: SkillCategory.LANGUAGES },
-      { name: 'Python (learning)', category: SkillCategory.LANGUAGES },
-      { name: 'Java (basic)', category: SkillCategory.LANGUAGES },
-      { name: 'C (basic)', category: SkillCategory.LANGUAGES },
       // Frontend
       { name: 'React', category: SkillCategory.FRONTEND },
-      { name: 'Next.js', category: SkillCategory.FRONTEND },
-      { name: 'Vite', category: SkillCategory.FRONTEND },
-      { name: 'React Hook Form', category: SkillCategory.FRONTEND },
-      { name: 'Zod', category: SkillCategory.FRONTEND },
       { name: 'Recharts', category: SkillCategory.FRONTEND },
-      { name: 'shadcn/ui', category: SkillCategory.FRONTEND },
-      { name: 'Tailwind CSS', category: SkillCategory.FRONTEND },
+      { name: 'HTML', category: SkillCategory.FRONTEND },
+      { name: 'CSS', category: SkillCategory.FRONTEND },
+      { name: 'TailwindCSS', category: SkillCategory.FRONTEND },
       // Backend
-      { name: 'Node.js', category: SkillCategory.BACKEND },
       { name: 'NestJS', category: SkillCategory.BACKEND },
+      { name: 'Node.js', category: SkillCategory.BACKEND },
       { name: 'Express', category: SkillCategory.BACKEND },
-      { name: 'REST APIs', category: SkillCategory.BACKEND },
-      { name: 'JWT', category: SkillCategory.BACKEND },
-      { name: 'Auth0', category: SkillCategory.BACKEND },
-      { name: 'TypeORM', category: SkillCategory.BACKEND },
-      { name: 'Prisma', category: SkillCategory.BACKEND },
-      { name: 'Microservices', category: SkillCategory.BACKEND },
-      { name: 'Event-driven architecture', category: SkillCategory.BACKEND },
+      { name: 'RESTful APIs', category: SkillCategory.BACKEND },
       // Databases
       { name: 'PostgreSQL', category: SkillCategory.DATABASES },
       { name: 'MongoDB', category: SkillCategory.DATABASES },
-      { name: 'Supabase', category: SkillCategory.DATABASES },
-      { name: 'Neon', category: SkillCategory.DATABASES },
       // DevOps
       { name: 'Docker', category: SkillCategory.DEVOPS },
-      { name: 'NGINX', category: SkillCategory.DEVOPS },
-      { name: 'HTTPS/TLS', category: SkillCategory.DEVOPS },
-      { name: 'GitHub Actions', category: SkillCategory.DEVOPS },
-      { name: 'SSH Deploy', category: SkillCategory.DEVOPS },
-      { name: 'Oracle Cloud', category: SkillCategory.DEVOPS },
       { name: 'Vercel', category: SkillCategory.DEVOPS },
       { name: 'Render', category: SkillCategory.DEVOPS },
-      { name: 'Linux', category: SkillCategory.DEVOPS },
+      { name: 'Supabase', category: SkillCategory.DEVOPS },
+      { name: 'Git', category: SkillCategory.DEVOPS },
+      { name: 'GitHub', category: SkillCategory.DEVOPS },
       // Integrations
+      { name: 'Auth0', category: SkillCategory.INTEGRATIONS },
       { name: 'Stripe', category: SkillCategory.INTEGRATIONS },
-      { name: 'Firebase', category: SkillCategory.INTEGRATIONS },
+      { name: 'Nodemailer', category: SkillCategory.INTEGRATIONS },
       { name: 'Cloudinary', category: SkillCategory.INTEGRATIONS },
+      { name: 'OpenAI', category: SkillCategory.INTEGRATIONS },
       // Practices
-      { name: 'Clean Architecture', category: SkillCategory.PRACTICES },
-      { name: 'DRY Principles', category: SkillCategory.PRACTICES },
-      { name: 'Database Transactions', category: SkillCategory.PRACTICES },
-      { name: 'Pagination Patterns', category: SkillCategory.PRACTICES },
-      { name: 'Soft Delete Patterns', category: SkillCategory.PRACTICES },
-      { name: 'Security Best Practices', category: SkillCategory.PRACTICES },
+      { name: 'Testing', category: SkillCategory.PRACTICES },
+      { name: 'Access Control', category: SkillCategory.PRACTICES },
+      { name: 'Validation', category: SkillCategory.PRACTICES },
+      { name: 'Multi-Tenant Architecture', category: SkillCategory.PRACTICES },
     ];
 
     const skills: Skill[] = [];
@@ -167,55 +154,47 @@ async function seed() {
       return skills.filter((s) => names.some((name) => s.name.toLowerCase().includes(name.toLowerCase())));
     };
 
-    // Create Projects
+    // Create Projects (matching production website)
     const projectsData = [
       {
-        title: 'SmartQR',
-        description: 'Hospitality platform for restaurants/venues: admin dashboard, products/categories, orders, customers analytics, reward codes, and Stripe checkout. Backend in NestJS with PostgreSQL; frontend in Next.js.',
-        githubUrl: '',
-        demoUrl: '',
-        imageUrl: '/images/projects/smartqr.png',
-        techNames: ['NestJS', 'Next.js', 'TypeScript', 'PostgreSQL', 'TypeORM', 'Stripe', 'Auth0', 'Docker', 'GitHub Actions', 'NGINX'],
+        title: 'SmartQR – QR Order Platform for Restaurants',
+        description: 'Multi-tenant platform for restaurants where customers scan a QR code on their table to order without waitstaff. Each restaurant has its own dashboard with reports, product management, and billing. Led the development of the entire reports module and integrated Stripe payment system and OpenAI-powered chatbot.',
+        githubUrl: 'https://github.com/SmartQrProject/SmartQrProject',
+        demoUrl: 'https://www.smart-qr.tech/',
+        imageUrl: '/project1.jpg',
+        techNames: ['NestJS', 'PostgreSQL', 'MongoDB', 'Stripe', 'Auth0', 'Docker', 'Recharts', 'React', 'Vercel', 'Render', 'Supabase', 'Nodemailer', 'Cloudinary', 'OpenAI'],
       },
       {
-        title: 'Conversational Agent Microservices Demo',
-        description: 'Microservices-based conversational agent: an AI orchestrator service that routes intents to a REST API service. Deployed across Vercel + Render.',
-        githubUrl: '',
-        demoUrl: 'https://desafio-tecnico-cse-laburen-com-2yk.vercel.app/',
-        imageUrl: '/images/projects/laburen.png',
-        techNames: ['NestJS', 'Node.js', 'TypeScript', 'Microservices', 'REST', 'Vercel', 'Render'],
+        title: 'AI Agent – Conversational Assistant for Web & WhatsApp',
+        description: 'Conversational assistant designed for a technical challenge by Laburen.com. The system detects user intents (e.g., product search, cart creation) and responds via WhatsApp or a web interface. Features modular architecture and full backend implementation from scratch with Twilio integration.',
+        githubUrl: 'https://github.com/matiasgallardo196/AI-agent',
+        demoUrl: 'https://desafio-tecnico-cse-laburen-com.vercel.app/',
+        imageUrl: '/project2.jpg',
+        techNames: ['NestJS', 'TypeScript', 'PostgreSQL', 'Supabase', 'OpenAI', 'React', 'TailwindCSS', 'Render', 'Vercel'],
       },
       {
-        title: 'BanMate',
-        description: 'Multi-venue ban-management system concept for hotels/pubs (operations-focused tooling for venues).',
-        githubUrl: '',
-        demoUrl: '',
-        imageUrl: '/images/projects/banmate.png',
-        techNames: ['NestJS', 'TypeScript', 'PostgreSQL', 'Next.js'],
+        title: 'E-Commerce API – Backend for Online Store',
+        description: 'RESTful API built with NestJS to support a complete e-commerce system. Includes user authentication with roles, comprehensive CRUD operations for products and user management, image uploads with Cloudinary, and order creation with purchase details. Deployed with CI/CD pipeline.',
+        githubUrl: 'https://github.com/matiasgallardo196/ecommerce-api-nestjs',
+        demoUrl: 'https://ecommerce-api-nestjs.fly.dev/api',
+        imageUrl: '/project3.jpg',
+        techNames: ['NestJS', 'TypeScript', 'PostgreSQL', 'Cloudinary', 'Docker', 'GitHub'],
       },
       {
-        title: 'AlojaPy',
-        description: 'Airbnb-style rental platform concept for Paraguay (listings, bookings, management).',
-        githubUrl: '',
-        demoUrl: '',
-        imageUrl: '/images/projects/alojaPy.png',
-        techNames: ['REST', 'PostgreSQL'],
+        title: 'Royal Hotel Booking – Appointment Booking Platform',
+        description: 'Full-stack platform that allows users to register, log in, and schedule hotel appointments through a modern interface. The system includes real-time validations, JWT authentication, image uploads, and email notifications with SendGrid integration.',
+        githubUrl: 'https://github.com/matiasgallardo196/royal-hotel-booking-system',
+        demoUrl: 'https://cute-fox-c52c9e.netlify.app/',
+        imageUrl: '/project4.jpg',
+        techNames: ['Node.js', 'TypeScript', 'Express', 'PostgreSQL', 'React', 'Cloudinary'],
       },
       {
-        title: 'Binance Trading Bot Orchestrator',
-        description: 'NestJS orchestrator microservice that triggers simulated buy/sell decisions on a schedule based on signals from an external microservice (simulation mode).',
-        githubUrl: '',
-        demoUrl: '',
-        imageUrl: '/images/projects/trading-bot.png',
-        techNames: ['NestJS', 'TypeScript', 'Microservices'],
-      },
-      {
-        title: 'Intruder Alert System',
-        description: 'Camera-based intruder detection concept: if a face is not in the enrolled database, trigger an alert and store snapshots in Cloudinary with an admin panel.',
-        githubUrl: '',
-        demoUrl: '',
-        imageUrl: '/images/projects/intruder-alert.png',
-        techNames: ['Node.js', 'NestJS', 'Cloudinary'],
+        title: 'MatiMovies – Movie Management System',
+        description: 'Full-stack application for managing and visualizing a catalog of movies. Includes form-based movie creation, a public catalog, and informational pages about cinema. Developed during full stack development training as a learning project with MongoDB integration.',
+        githubUrl: 'https://github.com/matiasgallardo196/mati-movies-management-system',
+        demoUrl: 'https://matimovies-movie-management-system-front-production.up.railway.app',
+        imageUrl: '/project5.jpg',
+        techNames: ['Node.js', 'Express', 'MongoDB', 'JavaScript', 'HTML', 'CSS'],
       },
     ];
 
@@ -242,10 +221,10 @@ async function seed() {
     }
     console.log(`📦 ${projectsData.length} Projects created with skills`);
 
-    // Create Languages
+    // Create Languages (matching production website)
     const languagesData = [
-      { name: 'Spanish', level: 'Native' },
-      { name: 'English', level: 'Intermediate / Professional working proficiency' },
+      { name: 'Spanish', level: 'Mother Tongue' },
+      { name: 'English', level: 'C1 Level' },
     ];
 
     for (const langData of languagesData) {
@@ -258,47 +237,45 @@ async function seed() {
     }
     console.log(`🌍 ${languagesData.length} Languages created`);
 
-    // Create Achievements
+    // Create Achievements (matching production website - simple descriptions)
     const achievementsData = [
-      { title: 'Education', value: 'Soy Henry', subtitle: 'Full Stack Bootcamp Graduate' },
-      { title: 'Production Deployments', value: 'Docker + NGINX', subtitle: 'HTTPS on Oracle Cloud VM' },
-      { title: 'CI/CD Pipeline', value: 'GitHub Actions', subtitle: 'Automated SSH Deploy' },
-      { title: 'Architecture', value: 'Multi-tenant', subtitle: 'Complex PostgreSQL Analytics' },
-      { title: 'Integrations', value: 'Stripe + Auth0', subtitle: 'PaymentIntent & JWT Auth' },
+      '5 full-stack projects deployed to production with CI/CD',
+      'Experience with multi-tenant architecture, Stripe, and OpenAI integrations',
+      'Proficient in backend development with NestJS, PostgreSQL, and Docker',
+      'Designed and implemented secure REST APIs with role-based access',
+      'Hands-on deployment experience with Oracle Cloud, Render, Vercel, Netlify, Railway, Fly',
+      'Teaching Assistant at Henry bootcamp, supporting students in JavaScript, TypeScript, React, Node, NestJS',
     ];
 
-    for (const achData of achievementsData) {
+    for (const description of achievementsData) {
       const achievement = queryRunner.manager.create(Achievement, {
         userId: user.id,
-        title: achData.title,
-        value: achData.value,
-        subtitle: achData.subtitle,
+        description: description,
       });
       await queryRunner.manager.save(achievement);
     }
     console.log(`🏆 ${achievementsData.length} Achievements created`);
 
-    // Create Contact
+    // Create Contact (matching production website)
     const contact = queryRunner.manager.create(Contact, {
       userId: user.id,
-      email: 'dreico07@gmail.com',
-      linkedin: 'https://www.linkedin.com/in/matiasgallardo-dev/',
+      email: 'matiasgallardo196@gmail.com',
+      linkedin: 'https://linkedin.com/in/matiasgallardo-dev',
       github: 'https://github.com/matiasgallardo196',
-      whatsapp: '+61 431269954',
-      metaDescription: 'Get in touch with Matías Gallardo - Backend-Focused Full Stack Developer',
-      pageTitle: 'Contact Me',
+      metaDescription: 'Contact information and social media links for Matias Gallardo',
+      pageTitle: "Let's Connect",
       heroTitle: "Let's Connect",
-      letsTalkTitle: "Let's Talk",
-      letsTalkDescription: "I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision. Feel free to reach out!",
-      availabilityTitle: 'Currently Available',
-      currentStatusTitle: 'Open to opportunities',
-      locationTitle: 'Based in Australia',
+      letsTalkTitle: "Let's Talk!",
+      letsTalkDescription: "I'm always interested in new opportunities, interesting collaborations, and challenging projects. Don't hesitate to reach out if you want to work together or just chat about technology.",
+      availabilityTitle: 'Availability',
+      currentStatusTitle: 'Current Status',
+      locationTitle: 'Location & Relocation',
     });
     await queryRunner.manager.save(contact);
     console.log('📧 Contact created');
 
-    // Create Contact Opportunities
-    const opportunitiesData = ['Full-time', 'Contract/Freelance', 'Startup', 'Remote', 'Hybrid'];
+    // Create Contact Opportunities (matching production website)
+    const opportunitiesData = ['Full-time opportunities', 'Freelance projects', 'Open source collaborations'];
     for (const oppName of opportunitiesData) {
       const opportunity = queryRunner.manager.create(ContactOpportunity, {
         contactId: contact.id,
@@ -308,8 +285,8 @@ async function seed() {
     }
     console.log(`💼 ${opportunitiesData.length} Opportunities created`);
 
-    // Create Contact Location Info
-    const locationInfoData = ['NSW, Australia', 'GMT+11 Timezone'];
+    // Create Contact Location Info (matching production website)
+    const locationInfoData = ['Based in Sydney, Australia', 'Open to relocate within Australia', 'Available for remote work'];
     for (const locName of locationInfoData) {
       const locationInfo = queryRunner.manager.create(ContactLocationInfo, {
         contactId: contact.id,
